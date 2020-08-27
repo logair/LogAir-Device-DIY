@@ -1,6 +1,6 @@
-# Hardware docs for logair air pollution monitor device
+# Hardware docs for LogAir device
 
-- schematics
+- Schematics
 - BoM
 
 Licensed under [CERN OHL v.1.2 or later](https://ohwr.org/project/cernohl/wikis/home)
