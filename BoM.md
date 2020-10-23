@@ -5,6 +5,6 @@
 |GG1802 gps   |$10.00   |http://www.stotoncn.com/gnssmodule/showproduct.php?lang=en&id=63   |
 |HM-10 compatible bluetooth   |$4.00   | https://www.iot-experiments.com/jdy-08/   |
 |Bluepill   |$2.00   |https://www.techshopbd.com/uploads/product_document/STM32bluepillarduinoguide(1).pdf   |
-|Battery 10000 mAmp/h + Battery charger   |$7.00   |   |
+|Battery 3000 mAh + Battery charger + DC converter  |$7.00   |   |
 |Extras: switches, cables, case   |$3.00    |   |
 |PCB LogAir| 2.00$ | |
