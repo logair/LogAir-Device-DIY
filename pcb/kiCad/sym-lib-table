@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name HM-10)(type Legacy)(uri ${KIPRJMOD}/lib/library/HM10.lib)(options "")(descr ""))
+  (lib (name logair_bluepill)(type Legacy)(uri ${KIPRJMOD}/lib/library/logair_bluepill.lib)(options "")(descr ""))
+  (lib (name logair)(type Legacy)(uri ${KIPRJMOD}/logair.lib)(options "")(descr ""))
+)

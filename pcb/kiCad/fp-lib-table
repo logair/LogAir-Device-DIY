@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name logairbluepill)(type KiCad)(uri ${KIPRJMOD}/lib/logair_bluepill.pretty)(options "")(descr ""))
+  (lib (name bluetooth)(type KiCad)(uri ${KIPRJMOD}/lib/logair_ble.pretty)(options "")(descr ""))
+  (lib (name logair_diy)(type KiCad)(uri ${KIPRJMOD}/logair_diy.pretty)(options "")(descr ""))
+)
