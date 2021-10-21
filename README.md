@@ -58,6 +58,16 @@ Download the code from the repository, and follow the same process as above.
 ## Connect
 UART parameters to connect to the serial monitor are the ones set in the code, but are usually 9600, or 115200 for the latest versions.
 
+## Troubleshoot
+
+### Board appears in dmesg, but not in lsusb 
+You might need to create a udev rules file
+```
+$ cat /etc/udev/rules.d/45-bluepill.rules
+ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0004", MODE="0666"
+ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0003", MODE="0666"
+```
+
 # ToDo
 
 ## Hardware
