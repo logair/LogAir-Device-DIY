@@ -1,4 +1,4 @@
-# Hardware docs for LogAir device
+# Hardware docs for the DIY LogAir device
 
 - Schematics
 - PCB
