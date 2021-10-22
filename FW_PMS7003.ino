@@ -18,66 +18,71 @@
 //
 //======================================================================
 
-
-#include <math.h>
 #include <inttypes.h>
 #include <stdio.h>
+#include <math.h>
 
 #include <SPI.h>
 
 #include <NMEAGPS.h>
 #include <GPSport.h> // choose the GPS module serial port
 #include <Streamers.h> // common set of printing and formatting routines for GPS data in csv, printed to debug output device
+#include <BME280Spi.h>
 
 #include "PMS.h"
 
 // for convenience, going back to SD.h instead of SdFat
 // because we don't want to modify SDConfigFile lib to use SdFat
 // Cf. https://forum.arduino.cc/index.php?topic=287298.0
-//#include "SdFat.h"
-//SdFat SD;
 #include <SD.h>
-
 #include <SDConfigFile.h>
 
-#include <BME280Spi.h>
 
 #define DEVICE_PIN PA4
 #define LED_BUILTIN PC13 // User LED pin definition
 
-#define default_deviceID "LA-00"
-#define default_fwID "CC_0.7_proto"
-#define default_pmID "PMS7003-031901464"
-#define default_rhID "GY-BME280"
-#define default_gpsID "ATGM336H"
-#define default_rfID "JDY_023_gen"
-#define default_bleName "logair00"
+#define LED_OFF 1
+#define LED_ON 0
+
+#define default_deviceID "LA"
+#define default_fwID "LA_0.8A"
+#define default_pmID "PMS7003"
+#define default_rhID "BME280"
+#define default_gpsID "GG-1802"
+#define default_rfID "JDY-023"
+#define default_bleName "logair"
 
 int battery;
-
 int connected = 0;
 int header_step = 10;
+char header [128] =""; // header buffer
 
 const uint8_t SDChipSelect = PB0; // SD Chip Select pin
 
-int ledstate = 0;
 
-// HEADER
-  char header [128] =""; // header buffer
-  
+
 static NMEAGPS  gps; // parse received characters into gps.fix() data structure
 static gps_fix  fix; // define set of GPS fix information. Will hold on to various pieces as received from RMC sentence
 
-BME280Spi::Settings settings(DEVICE_PIN); // Default : forced mode, standby time = 1000 ms
-                                          //           Oversampling = pressure ×1, temperature ×1, humidity ×1, filter off,
+BME280Spi::Settings settings(
+   DEVICE_PIN,
+   BME280::OSR_X1, // Temperature
+   BME280::OSR_X1, // Humidity
+   BME280::OSR_X1, // Pressure
+   BME280::Mode_Forced,
+   BME280::StandbyTime_1000ms,
+   BME280::Filter_Off,
+   BME280::SpiEnable_False
+   ); // Default : forced mode, standby time = 1000 ms, Oversampling = pressure ×1, temperature ×1, humidity ×1, filter off,
+
 BME280Spi bme(settings);
 
 PMS pms(Serial3);
 PMS::DATA data;
 
 int pm1, pm25, pm4, pm10;
-int batt = 1 ; 
-   
+int batt = 1 ;
+
 // The filename of the configuration file on the SD card
 const char CONFIG_FILE[] = "logair.cfg";
 
@@ -91,6 +96,7 @@ char *gpsID;
 char *rfID;
 char *bleName;
 
+/* READ CONFIG FILE VALUES TO VARIABLES */
 boolean readConfiguration() {
   const uint8_t CONFIG_LINE_LENGTH = 127;
 
@@ -116,59 +122,40 @@ boolean readConfiguration() {
     else if (cfg.nameIs("bleName")){ bleName = cfg.copyValue(); }
     else {}
     }
-  
+
   // clean up
   cfg.end();
-
   return true;
 }
 
 
-// WORK FUNCTION, ALL TIME CONSUMiNG TASKS GO THERE
+/* WORK FUNCTION */ // ALL TIME CONSUMING TASKS GO THERE
 static void doSomeWork()
 {
-  File logfile = SD.open("dust.txt", O_RDWR | O_APPEND);  // open logfile
-  if (!logfile){                                          // if file doesn't exist
-    logfile = SD.open("dust.txt", O_RDWR | O_CREAT);
-
-    if(!logfile){                                         // Failed logfile opening/creation.
-      if(Serial) Serial.println( F("Failed to open dust.txt") ); // Send message. ADD LED BLINKING
-      ledstate = 1; // LED OFF
-      digitalWrite(LED_BUILTIN, ledstate);
-    }
-      logfile.println("Header:DeviceId,FW_Version,pmSensorID,relhSensorID,gpsID,rfID");
-      logfile.println("Body:Latitude,Longitude,Temperature[C],Relative_Humidity[%RH],Pressure[Pa],PM1,PM2.5,PM4,PM10");
-  }
-
   char buffer [128] =""; // buffer
-  
   char bufferSD [256] = ""; // buffer for SD writing
-  
+
   sprintf(bufferSD, deviceID);
-    
+
   if (fix.valid.location){
-    
     uint32_t timestamp = (NeoGPS::clock_t) fix.dateTime;
     timestamp += 946684800; // convert from Y2K to UNIX Epoch
-    
+
     sprintf(bufferSD, "%s,%" PRIu32 "", bufferSD, timestamp); // timestamp in seconds from EPOCC Y2K
 
-    sprintf(buffer, "[%f,%f,%d,%.1f,%.1f", 
-        fix.latitude(), fix.longitude(), (int) round(fix.altitude()), 
+    sprintf(buffer, "[%f,%f,%d,%.1f,%.1f",
+        fix.latitude(), fix.longitude(), (int) round(fix.altitude()),
         fix.speed_kph(), fix.heading() );
 
-    sprintf(bufferSD, "%s,%f,%f,%d,%.1f,%.1f", bufferSD, 
-        fix.latitude(), fix.longitude(), (int) round(fix.altitude()), 
+    sprintf(bufferSD, "%s,%f,%f,%d,%.1f,%.1f", bufferSD,
+        fix.latitude(), fix.longitude(), (int) round(fix.altitude()),
         fix.speed_kph(), fix.heading() );
 
   } else {
     sprintf(buffer, "[,,,,");
     sprintf(bufferSD, "%s,,,,", bufferSD);
-    
-    ledstate = 1;
-    digitalWrite(LED_BUILTIN, ledstate);
   }
-   
+
 ///////////////////////////////////////////////////////// BME280
   float temp(NAN), hum(NAN), pres(NAN);
   BME280::TempUnit tempUnit(BME280::TempUnit_Celsius);
@@ -181,47 +168,54 @@ static void doSomeWork()
     pm10 = data.PM_AE_UG_10_0 ;
     pm25 = data.PM_AE_UG_2_5 ;
   }
+
+  // Had to go from %.1f to %d.%02d and int(x),int(x*100)%100 to go around a float issue with config of the new IDE
+  // quite sure there is a better way, but not for now.
+  // sprintf(buffer, "%s,%.1f,%.1f,%.1f,,%d,,%d$", buffer, temp, hum, pres, pm25, pm10);
+  // sprintf(bufferSD, "%s,%.1f,%.1f,%.1f,,%d,,%d$", bufferSD, temp, hum, pres, pm25, pm10);
+
+  sprintf(buffer, "%s,%d.%02d,%d.%02d,%d.%02d,,%d,,%d$", buffer, int(temp), int(temp*100)%100, int(hum), int(hum*100)%100, int(pres), int(pres*100)%100, pm25, pm10);
   
-//  float pm25_corr, pm10_corr;
-//  pm25_corr = pm25 / ( 1.0 + 0.48756*pow( ( hum / 100.0 ), 8.60068 ) );
-//  pm10_corr = pm10 / ( 1.0 + 0.81559*pow( ( hum / 100.0 ), 5.83411 ) );
+  sprintf(bufferSD, "%s,%d.%02d,%d.%02d,%d.%02d,,%d,,%d$", bufferSD, int(temp), int(temp*100)%100, int(hum), int(hum*100)%100, int(pres), int(pres*100)%100, pm25, pm10);
 
-  sprintf(buffer, "%s,%.1f,%.1f,%.1f,,%d,,%d$", buffer, temp, hum, pres, pm25, pm10);
-  sprintf(bufferSD, "%s,%.1f,%.1f,%.1f,,%d,,%d$", bufferSD, temp, hum, pres, pm25, pm10);
+  // Turn LED ON as we will open the SD file and write. DO NOT POWER OFF DEVICE BEFORE LED_OFF
+  digitalWrite(LED_BUILTIN,LED_ON);
 
-  digitalWrite(LED_BUILTIN,ledstate);
+  File logfile = SD.open("dust.txt", O_RDWR | O_APPEND);  // open logfile
+  if (!logfile){                                          // if file doesn't exist
+    logfile = SD.open("dust.txt", O_RDWR | O_CREAT);
 
-  Serial.println(buffer);
-  Serial1.println(buffer);
+    if(!logfile){                                         // Failed logfile opening/creation.
+      if(Serial) Serial.println( F("Failed to open dust.txt") ); // Send message. ADD LED BLINKING
+    }
+      logfile.println("Header:DeviceId,FW_Version,pmSensorID,relhSensorID,gpsID,rfID");
+      logfile.println("Body:Latitude,Longitude,Temperature[C],Relative_Humidity[%RH],Pressure[Pa],PM1,PM2.5,PM4,PM10");
+  }
 
   logfile.println(bufferSD);
   logfile.close();
 
+  // Turn LED OFF, can power off if needed.
+  digitalWrite(LED_BUILTIN,LED_OFF);
+
+  // Write to UARTs for USB and BLE
+  Serial.println(buffer);
+  Serial1.println(buffer);
 } // doSomeWork
 
 
 //---------- SETUP ------------//
 void setup()
 {
+
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(PA8, INPUT);
-  Serial.begin( 9600 ); // USB Serial
-  Serial1.begin( 9600 ); // Bluetooth
-  Serial3.begin( 9600 ); // SDS018
-  gpsPort.begin( 9600 ); // Serial2
-  delay(2000);
-
-  gpsPort.write("$PMTK220,1000*1F\r\n");
-  gpsPort.flush();
-
-  digitalWrite(LED_BUILTIN, LOW); // LED ON
-
+  
+  // SPI and SD first to read config
   SPI.begin();
-
-  bme.begin();
-
   SD.begin(SDChipSelect);
 
+  // Configuration
   didReadConfig = false;
 
   // giving default value to variables
@@ -231,20 +225,31 @@ void setup()
   rhID = default_rhID;
   gpsID = default_gpsID;
   rfID = default_rfID;
-  bleName = default_bleName;  
+  bleName = default_bleName;
 
   // Read our configuration from the SD card file.
   didReadConfig = readConfiguration();
 
   delay(1000);
+
+  // USB Serial
+  Serial.begin( 115200 ); 
   
-  // Changing the bluetooth name 
+  // TODO: Config BLE (BAUD from 9600 to 115200 if needed) 
+  Serial1.begin( 115200 ); // Bluetooth
   Serial1.write("AT+NAME");
   Serial1.write(bleName);
   Serial1.println("");
 
-//  while(Serial1.available()) Serial.write(Serial1.read());
+  // TODO: Implement GPS config from file on SD. 
+  delay(2000);
+  gpsPort.begin( 115200 ); // Serial2
 
+
+  // PMS7003
+  Serial3.begin( 9600 ); // SDS018
+
+  bme.begin();
 
   // HEADER: deviceID, fwVersion, pmID, rhID, gpsID, rfID (radiofreq, BLE,LoRa,WiFi)
   sprintf(header, "{%s,%s,%s,%s,%s,%s$", deviceID, fwID, pmID, rfID, gpsID, rfID );
@@ -256,17 +261,13 @@ void setup()
 
 void loop()
 {
-  
   while (gps.available( gpsPort )) {
     fix = gps.read();
-    ledstate = 0; // LED ON
-    digitalWrite(LED_BUILTIN, ledstate);
     doSomeWork();
     header_step ++;
-    }
+  }
 
   if (pms.read(data)){
-    // Check
     pm10 = data.PM_AE_UG_10_0 ;
     pm25 = data.PM_AE_UG_2_5 ;
   }
@@ -278,11 +279,10 @@ void loop()
     Serial.println(header);
 
     if (digitalRead(PA8)){
-      Serial.println("Connected");
+      Serial.println("BLE Connected");
     } else {
-      Serial.println("Not Connected");
+      Serial.println("BLE Not Connected");
     }
   }
-  
-  
 }
+
