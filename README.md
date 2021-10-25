@@ -39,7 +39,7 @@ The data transmissio nprotocol is extensible to allow implementation of differen
 
 0. A very first step should be to try and upload code to the Bluepill. This is before the rest as it happened that the chips could not be programmed, and realizing that after all that work is not ideal. Upload a bootloader, a blink code, and there you go.
 
-1. Solder the Bluepill connectors. Use the holes in the PCB as a guide for alignment.
+1. Solder the Bluepill connectors. Use the holes in the PCB as a guide for alignment. The G (GND, ground) pins are harder to solder, because of the copper mass involved.
 <div align="center"><img src=/img/1_PCB_and_Bluepill.jpg width=400px</img></div>
 
 2. Solder the assembled Bluepill to the PCB. Pay attention to the orientation.
@@ -52,10 +52,10 @@ The data transmissio nprotocol is extensible to allow implementation of differen
 <div align=center><img src=/img/4.1_Placement_BLE_BME_SD.jpg width=400px</img></div>
 <div align=center><img src=/img/4.2_Placement_BLE_BME_SD.jpg width=400px</img></div>
 
-5. Prepare the PCB for the power modules: put a thin layer of tin on the charger module pads, and a solder blob on one of the step-up pads
+5. Prepare the PCB for the power modules: put a thin layer of tin on the (blue) charger module pads, and a solder blob on one of the (red) step-up pads
 <div align=center><img src=/img/5.1_Power_Preparing.jpg width=400px</img></div>
 
-6. Solder the charger module by putting it in place, and adding solder on the pads from the top. I count about 5 seconds of applying heat for the tin applied on step 5 to melt. Then solder the step-up module using the first pad to hold it in place
+6. Solder the charger module by putting it in place, and adding solder on the pads from the top. I count about 5 seconds of applying heat for the tin applied on step 5 to melt. Then solder the step-up module using the first pad to hold it in place. When you are done, check the conductivity between the pins of the two modules, and that between the pads of the charging module. The latter because the method used to solder can produce 'tin overflows'. 
 <div align=center><img src=/img/5.2_Power_Place.jpg width=400px</img></div>
 <div align=center><img src=/img/5.3_Power_Solder.jpg width=400px</img></div>
 
