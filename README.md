@@ -40,50 +40,50 @@ The data transmissio nprotocol is extensible to allow implementation of differen
 0. A very first step should be to try and upload code to the Bluepill. This is before the rest as it happened that the chips could not be programmed, and realizing that after all that work is not ideal. Upload a bootloader, a blink code, and there you go.
 
 1. Solder the Bluepill connectors
-<div align="center"><img src="/Assembly/1_PCB_and_Bluepill.jpg" width="400px"</img></div>
+<div align="center"><img src=/img/1_PCB_and_Bluepill.jpg width=400px</img></div>
 
 2. Solder the assembled Bluepill to the PCB
-<div align=center><img src=/Assembly/2_PCB_back.jpg width=400px</img></div>
+<div align=center><img src=/img/2_PCB_back.jpg width=400px</img></div>
 
 3. Prepare the BME280 (solder the connectors), the BLE module (straighten the pins with a flat plier), and the uSD module
-<div align=center><img src=/Assembly/3_Prepare_BLE_BME280_SD.jpg width=400px</img></div>
+<div align=center><img src=/img/3_Prepare_BLE_BME280_SD.jpg width=400px</img></div>
 
 4. Place the BLE, BME, and uSD modules. Follow the picture, the BME280 (violet module) should be as far as possible from the PCB)
-<div align=center><img src=/Assembly/4.1_Placement_BLE_BME_SD.jpg width=400px</img></div>
-<div align=center><img src=/Assembly/4.2_Placement_BLE_BME_SD.jpg width=400px</img></div>
+<div align=center><img src=/img/4.1_Placement_BLE_BME_SD.jpg width=400px</img></div>
+<div align=center><img src=/img/4.2_Placement_BLE_BME_SD.jpg width=400px</img></div>
 
 5. Prepare the PCB for the power modules: put a thin layer of tin on the charger module pads, and a solder blob on one of the step-up pads
-<div align=center><img src=/Assembly/5.1_Power_Preparing.jpg width=400px</img></div>
+<div align=center><img src=/img/5.1_Power_Preparing.jpg width=400px</img></div>
 
 6. Solder the charger module by putting it in place, and adding solder on the pads from the top. I count about 5 seconds of applying heat for the tin applied on step 5 to melt. Then solder the step-up module using the first pad to hold it in place
-<div align=center><img src=/Assembly/5.2_Power_Place.jpg width=400px</img></div>
-<div align=center><img src=/Assembly/5.3_Power_Solder.jpg width=400px</img></div>
+<div align=center><img src=/img/5.2_Power_Place.jpg width=400px</img></div>
+<div align=center><img src=/img/5.3_Power_Solder.jpg width=400px</img></div>
 
 Then place and solder the switch. Here, try to apply a minimal amount of tin. As the other side of the pins will go against the PMS7003 which has a conductive casing, the pins should be cut or filed down, then taped over (two layers of normal, clear tape are enough)
-<div align=center><img src=/Assembly/6.2_Switch_Solder.jpg width=400px</img></div>
-<div align=center><img src=/Assembly/6.3_Switch_cut.jpg width=400px</img></div>
+<div align=center><img src=/img/6.2_Switch_Solder.jpg width=400px</img></div>
+<div align=center><img src=/img/6.3_Switch_cut.jpg width=400px</img></div>
 
 7. Bend lightly the SWD pins of the Bluepill to give room for soldering the GPS wires
-<div align=center><img src=/Assembly/6.1_Switch_Place.jpg width=400px</img></div>
+<div align=center><img src=/img/6.1_Switch_Place.jpg width=400px</img></div>
 
 8. Solder the GPS wires. The order is the same as their order on the GPS-side plug, you can use the PCB markings (5V is red) and pictures to help you. The wires should not go over each other at any point for the order to be preserved.
-<div align=center><img src=/Assembly/7.1_GPS_Prepare.jpg width=400px</img></div>
-<div align=center><img src=/Assembly/7.2_GPS_Solder.jpg width=400px</img></div>
+<div align=center><img src=/img/7.1_GPS_Prepare.jpg width=400px</img></div>
+<div align=center><img src=/img/7.2_GPS_Solder.jpg width=400px</img></div>
 
 9. Solder the connector for the PMS7003. As the width of the Bluepill vary a bit, it is safer to solder it lightly 'bent' away from the bluepill. To do that, solder the pins that are on the far side from the Bluepill first, then plug the PMS7003 in to see how thing fit. Then remove and solder the rest. 5-10 degrees should do.
-<div align=center><img src=/Assembly/8_PMS7003_pin_solder.jpg width=400px</img></div>
+<div align=center><img src=/img/8_PMS7003_pin_solder.jpg width=400px</img></div>
 
 10. For a smaller device, I cut most of the pins apparent on the back of the PCB to the top of the tin cone. Apply insulation on the pins, and this is important. I use a sticky, translucent, think tape I found on aliexpress. Any other ~1-2mm insulating material will easily do.
-<div align=center><img src=/Assembly/9_Pin_Cut_and_Stickies.jpg width=400px</img></div>
+<div align=center><img src=/img/9_Pin_Cut_and_Stickies.jpg width=400px</img></div>
 
 11. Solder the battery wires to the charger module pads
-<div align=center><img src=/Assembly/10_Battery.jpg width=400px</img></div>
+<div align=center><img src=/img/10_Battery.jpg width=400px</img></div>
 
 12. Before finalizing the assembly, write down the PMS7003 serial number somewhere, to track device quality :)
-<div align=center><img src=/Assembly/11_Sensor_info.jpg width=400px</img></div>
+<div align=center><img src=/img/11_Sensor_info.jpg width=400px</img></div>
 
 13. And it is done :)
-<div align=center><img src=/Assembly/12_Final.jpg width=400px</img></div>
+<div align=center><img src=/img/12_Final.jpg width=400px</img></div>
 
   </details>
   
