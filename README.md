@@ -18,6 +18,25 @@ The data transmissio nprotocol is extensible to allow implementation of differen
 <details>
   <summary>Expand for instructions!</summary>
   
+  ### Material
+
+- LogAir PCB
+- Bluepill + connectors
+- BME280 + connector
+- uSD module
+- BLE module
+- PMS7003 + connector
+- DC step-up
+- Charger module
+- GPS module
+
+- Soldering iron + tin
+- double-sided tape + jelly tape if available
+- cutting pliers
+- flat pliers
+  
+  ### Instructions
+
 0. A very first step should be to try and upload code to the Bluepill. This is before the rest as it happened that the chips could not be programmed, and realizing that after all that work is not ideal. Upload a bootloader, a blink code, and there you go.
 
 1. Solder the Bluepill connectors
