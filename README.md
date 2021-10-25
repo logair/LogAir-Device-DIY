@@ -39,16 +39,16 @@ The data transmissio nprotocol is extensible to allow implementation of differen
 
 0. A very first step should be to try and upload code to the Bluepill. This is before the rest as it happened that the chips could not be programmed, and realizing that after all that work is not ideal. Upload a bootloader, a blink code, and there you go.
 
-1. Solder the Bluepill connectors
+1. Solder the Bluepill connectors. Use the holes in the PCB as a guide for alignment.
 <div align="center"><img src=/img/1_PCB_and_Bluepill.jpg width=400px</img></div>
 
-2. Solder the assembled Bluepill to the PCB
+2. Solder the assembled Bluepill to the PCB. Pay attention to the orientation.
 <div align=center><img src=/img/2_PCB_back.jpg width=400px</img></div>
 
 3. Prepare the BME280 (solder the connectors), the BLE module (straighten the pins with a flat plier), and the uSD module
 <div align=center><img src=/img/3_Prepare_BLE_BME280_SD.jpg width=400px</img></div>
 
-4. Place the BLE, BME, and uSD modules. Follow the picture, the BME280 (violet module) should be as far as possible from the PCB)
+4. Place the BLE, BME, and uSD modules. Follow the picture, the BME280 (violet module) should be as far as possible from the PCB), with its pins barely sticking through on the other side.
 <div align=center><img src=/img/4.1_Placement_BLE_BME_SD.jpg width=400px</img></div>
 <div align=center><img src=/img/4.2_Placement_BLE_BME_SD.jpg width=400px</img></div>
 
