@@ -151,16 +151,16 @@ To upload, you will need to manually reset by pressing the button you can see ne
 Download the code from the repository, and follow the same process as above.
 
 ## Connect
-UART parameters to connect to the serial monitor are the ones set in the code, but are usually 9600, or 115200 for the latest versions.
+UART parameters to connect to the serial monitor are the ones set in the code. The default is 112500, but 9600 was previously used.
 
 ## Troubleshoot
 
 ### Board appears in dmesg, but not in lsusb 
 You might need to create a udev rules file
+`/etc/udev/rules.d/45-bluepill.rules`
 ```
-$ cat /etc/udev/rules.d/45-bluepill.rules
-ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0004", MODE="0666"
-ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0003", MODE="0666"
+ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0004", MODE="0666" SYMLINK+="maple", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0003", MODE="0666" SYMLINK+="maple", ENV{ID_MM_DEVICE_IGNORE}="1"
 ```
   </details>
   
