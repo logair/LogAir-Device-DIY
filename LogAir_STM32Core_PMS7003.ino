@@ -1,5 +1,5 @@
 //  License:
-//    Copyright (C) 2017-2020, Emmanuel Kellner
+//    Copyright (C) 2017-2021, Emmanuel Kellner
 //
 //    This file is part of LogAir
 //
@@ -14,9 +14,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Dust.  If not, see <http://www.gnu.org/licenses/>.
+//    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-//======================================================================
+
 
 #include <inttypes.h>
 #include <stdio.h>
