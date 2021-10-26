@@ -95,11 +95,23 @@ Then place and solder the switch. Here, try to apply a minimal amount of tin. As
 ### Pre-requisites
 - A Bluepill with functional bootload (e.g. generic_boot20_pc13.bin from https://github.com/rogerclarkmelbourne/STM32duino-bootloader
 - Install Arduino IDE
-- Install board definition:
-  - File > Preferences > Additional Boards Manager URLs: add the following URL to the list (empty by default):
-  `http://dan.drown.org/stm32duino/package_STM32duino_index.json`
+- Install board definition:File > Preferences > Additional Boards Manager URLs: add the following URL to the list (empty by default):
+  `https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json`
+- Tools > Board > Boards Manager > Search 'STM32' > Install 'STM32 MCU based boards'
+    
+<details>
+<summary>For older instructions using unofficial stm32duino core</summary>
+  
+- Install board definition:File > Preferences > Additional Boards Manager URLs: add the following URL to the list (empty by default):
+`http://dan.drown.org/stm32duino/package_STM32duino_index.json`
 - Tools > Board > Boards Manager > Search 'STM32' > Install 'STM32F1xx/GD32F1xx boards'
-
+- Once done, close the Board Manager and Select the Board: Tools > Board > STM32F1 Boards (Arduino_STM32) > Maple mini
+  
+NO NEED TO FOLLOW THE CONFIGURE SECTION BELOW.
+    
+</details>
+  
+  
 ### Libraries
 Install the following libraries from the Library Manager
 Tools > Manage Libraries... 
@@ -118,11 +130,18 @@ Tools > Manage Libraries...
 - BME280 by Tyler Glenn
 - PMS Library by Mariusz Kacki
 
+## Configure
+  - Select the proper board:
+  `Tools > Boards > STM32 Boards (selected from submenu) > Generic STM32F1 series`
+  - Enable configurations we need:
+    - `Tools > U(S)ART Support > Enabled (Generic 'Serial')`
+    - `Tools > USB Support > CDC (Generic Serial supersedes U(S)ART)`
+    - `Tools > Upload Method > Maple DFU Bootloader 2.0`
+  
 ## Connect, compile and upload
 Let us now try and upload a quick code to test if all works...
 
 - Open the Blink example, and add `#define LED_BUILTIN PC13` at the very beginning
-- Select the Board: Tools > Board > STM32F1 Boards (Arduino_STM32) > Maple mini
 - Select the Port: Tools > Port > ... (depends on your OS)
 - Press the Compile and Upload arrow....
 
