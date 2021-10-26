@@ -111,7 +111,14 @@ NO NEED TO FOLLOW THE CONFIGURE SECTION BELOW.
     
 </details>
   
-  
+### Configure
+  - Select the proper board:
+  `Tools > Boards > STM32 Boards (selected from submenu) > Generic STM32F1 series`
+  - Enable configurations we need:
+    - `Tools > U(S)ART Support > Enabled (Generic 'Serial')`
+    - `Tools > USB Support > CDC (Generic Serial supersedes U(S)ART)`
+    - `Tools > Upload Method > Maple DFU Bootloader 2.0`
+
 ### Libraries
 Install the following libraries from the Library Manager
 Tools > Manage Libraries... 
@@ -129,14 +136,6 @@ Tools > Manage Libraries...
 ```
 - BME280 by Tyler Glenn
 - PMS Library by Mariusz Kacki
-
-## Configure
-  - Select the proper board:
-  `Tools > Boards > STM32 Boards (selected from submenu) > Generic STM32F1 series`
-  - Enable configurations we need:
-    - `Tools > U(S)ART Support > Enabled (Generic 'Serial')`
-    - `Tools > USB Support > CDC (Generic Serial supersedes U(S)ART)`
-    - `Tools > Upload Method > Maple DFU Bootloader 2.0`
   
 ## Connect, compile and upload
 Let us now try and upload a quick code to test if all works...
