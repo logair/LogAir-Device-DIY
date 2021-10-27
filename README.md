@@ -167,7 +167,7 @@ ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0003", MODE="0666" SYMLINK+="maple",
 # ToDo
 
 ## Hardware
-
+- Disconnect PC14 and PC15 for RTC reliability
 - Better power supply, as this one just charges and discharges blindly.
 - Integrate the components
 - Replace the BLE module with an ESP32 (the STM32 might have to stay, as ESP32 are more limited, e.g., available UARTs)
@@ -176,8 +176,11 @@ ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0003", MODE="0666" SYMLINK+="maple",
 - ...
 
 ## Firmware
-
+- Provide a time base when no GPS signal is present, and no phone is connected
+  - Implement RTC (there is an on-board crystal on the Bluepill).
+  - Implement time input from serial (BLE and/or PC)
 - Implement better data storage and upload 
+  - Log data with human-readable time as well as UNIX timestamp
   - Revamp buffering to limit uSD write operations
   - Revamp data storage on the SD card (textfile + DB?)
   - Implement deferred data upload for when uplink not continuously available
