@@ -164,18 +164,71 @@ ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0003", MODE="0666" SYMLINK+="maple",
 ```
   </details>
   
+## Use
+
+
+<details>
+  <summary>Expand for usage instructions!</summary>
+  
+### Turning ON / OFF
+The switch onthe back of the device allows to turn the device on and off.
+
+The red or green blinking light shows when the device is writing on the SD card. When the LED is ON, the device should not be turned OFF as it might corrupt the card.
+
+### Blinking LEDs
+
+The modules we use include LEDs of varying colors. Here are some useful informations you can get from them:
+
+- Bluetooth LED (green or red), left side of the device: This LED is blinking if no phone is connected to the device, and stays on when a connection is active.
+- GPS LED (blue and red):
+  - The red LED shows the module is powered, and should always be on when the device runs. 
+  - The blue LED is blinking when the module receives signals strong enough to get a 'fix', or know its position. This is important if you rely on the SD card only to record the measurements, i.e. if you're not using a smartphone to send your data to the server.
+- Device LEDs:
+  - Left LED: red or green, signals the controller receives power. Should always be ON when the device is turned on.
+  - Right LED: red or green, currently parametered to signal the device is writing to the SD card and should not be powered off. You can turn the device OFF when the LED is OFF.
+
+### With the LogAir APP
+Follow the instructions on our video tutorial.
+
+### Stand-alone
+The LogAir device records its measurements on the micro-SD card, which can be extracted and imported into a spreadsheet or GIS program.
+
+The limitation in this mode is that the device can only rely on its own GPS module for time and position. This means that, before a valid GPS signal is acquired, the measurements on the SD card will not list any time or position. 
+
+The signal depends on your location, the time of the day, if there are obstacles between the device and the sky, etc. Indoor measurements are often difficult, but windowsills sometimes give good results.
+
+We are trying to find a way to give the current time to the device by using a program on the computer, or preparing it on the SD card, but there is no easy solution there... See ToDos, input welcome :)
+
+</details>
+
 # ToDo
 
+Here are several items that are planned, currently developed, or on hold pending contributions. If you are interested in any of them be it for giving a helping hand or advices, please get in touch :)
+  
 ## Hardware
+
+These items focus on the device conception, including electronics, casing, production, etc.
+
+<details>
+  <summary>Expand for Hardware development tasks!</summary>
+  
 - Disconnect PC14 and PC15 for RTC reliability
 - Better power supply, as this one just charges and discharges blindly.
-- Integrate the components
+- Integrate the components on a printed circuit board
 - Replace the BLE module with an ESP32 (the STM32 might have to stay, as ESP32 are more limited, e.g., available UARTs)
 - Make a similar MVP with SPS30 & SHT3x
 - Add a LoRa chip! See Clement's work
 - ...
 
+</details>
+
 ## Firmware
+
+Firmware development focuses on the program that makes the device run. The brain within the machine :)
+
+<details>
+  <summary>Expand for Firmware development tasks!</summary>
+
 - Provide a time base when no GPS signal is present, and no phone is connected
   - Implement RTC (there is an on-board crystal on the Bluepill).
   - Implement time input from serial (BLE and/or PC)
@@ -191,8 +244,15 @@ ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0003", MODE="0666" SYMLINK+="maple",
 - Add interrupts everywhere?
 - ...
 
+</details>
+
 ## APP
 
+Here, developmetn of our application that helps collect and send data from the device to the servers, and get it back in forms of maps, messages, etc. Our UI sucks? Contribute a better one ;)
+
+<details>
+  <summary>Expand for APP development tasks!</summary>
+  
 - All 
   - Implement API key for upload/download
 
@@ -207,10 +267,35 @@ ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0003", MODE="0666" SYMLINK+="maple",
   - Make one :x Nicos is on it!
   - ...
 
+</details>
+
 ## Backend
 
+All the work that helps gather the data, safekeep it, develop ways to use it, share it, etc. DBs, services, APIs and the like. Put your hoodie on and hack away!
+
+<details>
+  <summary>Expand for Backend development tasks!</summary>
+  
   - Implement API key for upload/download
   - ...
+
+</details>
+
+
+## Data
+
+All the work that develop ways to analyse, understand and use the data. Algorithms, GIS, dashboards etc.
+
+ <details>
+  <summary>Expand for Data visualisation and Data science tasks!</summary>
+  
+  - Make a dashboard! 
+  - Build a QGIS server that works fast enough
+  - Find missing data points in the contributions, and signal them for collection
+  - Find periods in the signal, and exploit them
+  - Build a better pipeline for extraction and analysis
+
+</details>
 
 # Upcoming
 
