@@ -16,7 +16,7 @@ The data transmissio nprotocol is extensible to allow implementation of differen
 
 ## Assemble
 <details>
-  <summary>Expand for instructions!</summary>
+  <summary>Click to expand for instructions!</summary>
   
   ### Material
 
@@ -90,7 +90,7 @@ Then place and solder the switch. Here, try to apply a minimal amount of tin. As
 ## Program
 
 <details>
-  <summary>Expand for programming instructions!</summary>
+  <summary>Click to expand for programming instructions!</summary>
   
 ### Pre-requisites
 - A Bluepill with functional bootload (e.g. generic_boot20_pc13.bin from https://github.com/rogerclarkmelbourne/STM32duino-bootloader
@@ -168,7 +168,7 @@ ATTRS{idVendor}=="1eaf", ATTRS{idProduct}=="0003", MODE="0666" SYMLINK+="maple",
 
 
 <details>
-  <summary>Expand for usage instructions!</summary>
+  <summary>Click to expand for usage instructions!</summary>
   
 ### Turning ON / OFF
 The switch onthe back of the device allows to turn the device on and off.
@@ -210,7 +210,7 @@ Here are several items that are planned, currently developed, or on hold pending
 These items focus on the device conception, including electronics, casing, production, etc.
 
 <details>
-  <summary>Expand for Hardware development tasks!</summary>
+  <summary>Click to expand for Hardware development tasks!</summary>
   
 - Disconnect PC14 and PC15 for RTC reliability
 - Better power supply, as this one just charges and discharges blindly.
@@ -227,7 +227,7 @@ These items focus on the device conception, including electronics, casing, produ
 Firmware development focuses on the program that makes the device run. The brain within the machine :)
 
 <details>
-  <summary>Expand for Firmware development tasks!</summary>
+  <summary>Click to expand for Firmware development tasks!</summary>
 
 - Provide a time base when no GPS signal is present, and no phone is connected
   - Implement RTC (there is an on-board crystal on the Bluepill).
@@ -251,7 +251,7 @@ Firmware development focuses on the program that makes the device run. The brain
 Here, developmetn of our application that helps collect and send data from the device to the servers, and get it back in forms of maps, messages, etc. Our UI sucks? Contribute a better one ;)
 
 <details>
-  <summary>Expand for APP development tasks!</summary>
+  <summary>Click to expand for APP development tasks!</summary>
   
 - All 
   - Implement API key for upload/download
@@ -274,7 +274,7 @@ Here, developmetn of our application that helps collect and send data from the d
 All the work that helps gather the data, safekeep it, develop ways to use it, share it, etc. DBs, services, APIs and the like. Put your hoodie on and hack away!
 
 <details>
-  <summary>Expand for Backend development tasks!</summary>
+  <summary>Click to expand for Backend development tasks!</summary>
   
   - Implement API key for upload/download
   - ...
@@ -287,7 +287,7 @@ All the work that helps gather the data, safekeep it, develop ways to use it, sh
 All the work that develop ways to analyse, understand and use the data. Algorithms, GIS, dashboards etc.
 
  <details>
-  <summary>Expand for Data visualisation and Data science tasks!</summary>
+  <summary>Click to expand for Data visualisation and Data science tasks!</summary>
   
   - Make a dashboard! 
   - Build a QGIS server that works fast enough
